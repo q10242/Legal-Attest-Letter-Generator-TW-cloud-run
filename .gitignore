@@ -90,3 +90,6 @@ ENV/
 
 # output files
 *.pdf
+
+
+docker-compose.yml
