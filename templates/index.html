@@ -24,28 +24,37 @@
 			</h3>
 		</div>
 	</div>
-	<div class="row p-3">
+	<div class="row m-3 ">
+		
 		
 		<div class="col-md-4 ">
 			<h6 class="inline">
 				寄件人資訊
 			</h6> 
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="寄件人">新增</button>
+			<div class="from_cards">
+			</div>
+			<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="寄件人">新增</button>
 		</div>
 		<div class="col-md-4 ">
 			<h6 class="inline">
 				收件人資訊
 			</h6> 
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="收件人">新增</button>
+			<div class="to_cards">
+			</div>
+
+			<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="收件人">新增</button>
 		</div>
 		<div class="col-md-4 ">
 			<h6 class="inline">
 				副本收件人資訊
 			</h6> 
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="副本地址">新增</button>
+			<div class="copy_cards">
+			</div>
+			
+			<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="副本地址">新增</button>
 		</div>
 	</div>
-	<div class="row p-3">
+	<div class="row  m-3">
 
 		<div class="col-md-12 ">
 
@@ -61,7 +70,7 @@
 					<textarea class="form-control" id="letter_content"></textarea>
 					
 				</div>				
-				<button type="submit" class="btn btn-primary">
+				<button type="button" class="btn btn-primary" id="generate" onclick="download()">
 					產生
 				</button>
 			</form>
@@ -90,7 +99,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-				<button type="button" class="btn btn-primary"  data-bs-dismiss="modal"  id="submit">新增</button>
+				<button type="button" class="btn btn-primary"  data-bs-dismiss="modal"  id="submit_address">新增</button>
 			</div>
 			</div>
 		</div>
@@ -137,11 +146,106 @@
 		})
 
 
-		var submit_btn = document.getElementById('submit')
+		var submit_btn = document.getElementById('submit_address')
 		submit_btn.addEventListener('click', function (event) {
 			console.log(type_now)
+			if(type_now == '寄件人'){
+				
+				address = document.getElementById('address').value
+				name = document.getElementById('name').value
+				cont = fromAddressData.counter
+				fromAddressData.addresses.push({id:cont,name:name,address:address })
+				document.getElementById('address').value = ''	
+				document.getElementById('name').value = ''
+				count = fromAddressData.counter
+				fromAddressData.counter+=1
+				type = 'from'
+	
+				
+				
+			}else if(type_now == '收件人'){
+				address = document.getElementById('address').value
+				name = document.getElementById('name').value
+				cont = toAddressData.counter
+				toAddressData.addresses.push({id:cont,name:name,address:address })
+				document.getElementById('address').value = ''
+				document.getElementById('name').value = ''
+				count = toAddressData.counter+1
+				fromAddressData.counter+=1
+				type = "to"
+				
+			}else if(type_now == '副本地址'){
+				address = document.getElementById('address').value
+				name = document.getElementById('name').value
+				cont = copyAddressData.counter
+				copyAddressData.addresses.push({id:cont,name:name,address:address })
+				document.getElementById('address').value = ''
+				document.getElementById('name').value = ''	
+				count = copyAddressData.counter+1
+				fromAddressData.counter+=1
+				type = "copy"
+			}
+			delete_key = type+"_" + count
+			var cardHTML = `
+					<div class="card" id="${delete_key}">
+						<h5 class="card-header d-flex justify-content-between align-items-center">
+							<span class="title">${name}</span>
+							<button type="button" class="btn btn-danger" style="width: 70px;"  onclick="delete_card('${type}', ${count})" >刪除</button>
+						</h5>
+						<div class="card-body">
+							<p class="card-text">
+								${address}
+							</p>
+						</div>
+					</div>
+				`;
 			// addAddress(type_now)
+			$("."+type+'_cards').append(cardHTML);
 		})
+
+		function delete_card(type,id){
+			card_id = type + "_" + id
+			document.getElementById(card_id).remove()
+			if (type === 'from') {
+				for (var i = 0; i < fromAddressData.addresses.length; i++) {
+					if (fromAddressData.addresses[i].id === id) {
+						fromAddressData.addresses.splice(i, 1);
+						break;
+					}
+				}
+			} else if (type === 'to') {
+				for (var i = 0; i < toAddressData.addresses.length; i++) {
+					if (toAddressData.addresses[i].id === id) {
+						toAddressData.addresses.splice(i, 1);
+						break;
+					}
+				}
+			} else if (type === 'copy') {
+				for (var i = 0; i < copyAddressData.addresses.length; i++) {
+					if (copyAddressData.addresses[i].id === id) {
+						copyAddressData.addresses.splice(i, 1);
+						break;
+					}
+				}
+			}
+			
+		}
+
+		function deleteAddress(type, id) {
+			// 根据类型找到相应的数组
+			var addresses = type === 'from' ? fromAddressData.addresses : (type === 'to' ? toAddressData.addresses : copyAddressData.addresses);
+		
+			// 根据id找到相应的地址信息
+			var addressInfo = addresses.find(function (addressInfo) {
+				return addressInfo.id === id;
+			});
+		
+			// 找到该地址信息在数组中的索引
+			var index = addresses.indexOf(addressInfo);
+		
+			// 从数组中删除该地址信息
+			addresses.splice(index, 1);
+		}
 
 		function addAddress(type) {
 			var nameInput = document.getElementById('name');
@@ -173,6 +277,32 @@
 			addressInput.value = '';
 		
 			
+		}
+
+		function download() {
+			console.log('download')
+			//all collected data to json
+			fromAddressData
+			toAddressData
+			copyAddressData
+
+			payload = {
+				"from":fromAddressData.addresses,
+				"to":toAddressData.addresses,
+				"copy":copyAddressData.addresses,
+				"text": document.getElementById('letter_content').value
+			}
+			payload = JSON.stringify(payload)
+			$.post("/generate" , payload, function(data, status){
+				console.log(data)
+				console.log(status)
+				var blob = new Blob([data], {type: "application/pdf"});
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = "郵局存證信函.pdf";
+				link.click();
+			});
+
 		}
 		
 	</script>
