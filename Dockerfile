@@ -11,4 +11,4 @@ RUN pip install -U pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-ENTRYPOINT ["./entry-point.sh"]
+ENTRYPOINT ["python" , "server.py"]
