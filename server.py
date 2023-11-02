@@ -1,4 +1,4 @@
-import uvicorn, os
+import uvicorn, os, json, time, threading
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse , FileResponse
 from fastapi.templating import Jinja2Templates
@@ -6,6 +6,8 @@ from fastapi.staticfiles import StaticFiles
 import random
 import string
 from lal_modules import core
+
+
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
@@ -28,6 +30,7 @@ async def generate(request: Request):
     產生檔案
     """
     json_request = await request.json()
+    json_request = json.loads(json_request)
     from_data = json_request["from"]
     to_data = json_request["to"]
     copy_data = json_request["copy"]
@@ -75,9 +78,26 @@ async def generate(request: Request):
     core.clean_temp_files()
     response = FileResponse(output_filename, headers={"Content-Disposition": "attachment"})
     print('Done. Filename: ', output_filename)
-
+    try:
+        threading.Thread(target=delete_file_after_delay, args=(output_filename, 3)).start()
+    except Exception as e:
+        print(e)
     return response
 
+
+def delete_file_after_delay(file_path, delay_seconds):
+    try:
+        # 等待指定秒數
+        time.sleep(delay_seconds)
+        
+        # 刪除指定檔案
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"已刪除檔案: {file_path}")
+        else:
+            print(f"檔案不存在: {file_path}")
+    except Exception as e:
+        print(f"刪除檔案時發生錯誤: {str(e)}")
 
 def generate_random_string(length):
     characters = string.ascii_letters + string.digits  # 包含字母和数字的字符集
