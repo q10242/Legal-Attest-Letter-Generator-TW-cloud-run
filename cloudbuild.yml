@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: 
+    - 'build'
+    - '-t'
+    - 'asia-east1-docker.pkg.dev/fields-287809/tw-legistry-letter-pdf:latest'
+  images:
+    - 'asia-east1-docker.pkg.dev/fields-287809/tw-legistry-letter-pdf:latest'
