@@ -107,7 +107,7 @@ def main():
     # 啟動主應用程式
     uvicorn.run("server:app",
                 host="0.0.0.0",
-                port=8070)
+                port=8000)
 
 
 if __name__ == "__main__":
