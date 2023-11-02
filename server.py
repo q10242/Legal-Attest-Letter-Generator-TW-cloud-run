@@ -42,14 +42,14 @@ async def generate(request: Request):
     ccs = []
     cc_addr = []
     for i in range(len(from_data)):
-        senders.append(from_data[i]["name"])
-        senders_addr.append(from_data[i]["address"])
+        senders.append(str(from_data[i]["name"]))
+        senders_addr.append(str(from_data[i]["address"]))
     for i in range(len(to_data)):
-        receivers.append(to_data[i]["name"])
-        receivers_addr.append(to_data[i]["address"])
+        receivers.append(str(to_data[i]["name"]))
+        receivers_addr.append(str(to_data[i]["address"]))
     for i in range(len(copy_data)):
-        ccs.append(copy_data[i]["name"])
-        cc_addr.append(copy_data[i]["address"])
+        ccs.append(str(copy_data[i]["name"]))
+        cc_addr.append(str(copy_data[i]["address"]))
     if len(senders_addr) == 0:
         senders_addr.append("")
     if len(senders) == 0:
@@ -107,7 +107,7 @@ def main():
     # 啟動主應用程式
     uvicorn.run("server:app",
                 host="0.0.0.0",
-                port=8000)
+                port=8080)
 
 
 if __name__ == "__main__":
