@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,133 +7,293 @@
 
     <title>台灣郵局存證信函產生器</title>
 
-    <meta name="description" content="台灣郵局存證信函產生器">
+    <meta name="description" content="免費台灣郵局存證信函產生器 - 快速產生合法格式的存證信函">
     <meta name="author" content="黑田">
 
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <link href="static/css/style.css" rel="stylesheet">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4397281842502641"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4397281842502641"
      crossorigin="anonymous"></script>
+    <style>
+      :root {
+        --primary-color: #3b5d50;
+        --secondary-color: #f9bf29;
+        --bg-light: #f8f9fa;
+        --text-dark: #2d3b38;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      body {
+        font-family: 'Noto Sans TC', sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+      .site-header {
+        background: linear-gradient(135deg, var(--primary-color), #2d4f43);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        box-shadow: var(--box-shadow);
+      }
+      .site-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .site-description {
+        opacity: 0.9;
+        font-weight: 300;
+      }
+      .card {
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 1rem;
+        border: none;
+        transition: transform 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .card-header {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+      }
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+      .btn-primary:hover {
+        background-color: #2d4f43;
+        border-color: #2d4f43;
+      }
+      .btn-warning {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: var(--text-dark);
+      }
+      .btn-danger {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+      }
+      .btn {
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+      }
+      .form-control {
+        border-radius: var(--border-radius);
+        padding: 0.75rem;
+        border: 1px solid #ced4da;
+      }
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(59, 93, 80, 0.25);
+      }
+      textarea.form-control {
+        min-height: 150px;
+      }
+      .section-title {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+      .section-title:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--secondary-color);
+      }
+      .info-section {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        box-shadow: var(--box-shadow);
+      }
+      .info-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .info-content {
+        margin-bottom: 1.5rem;
+      }
+      .address-section {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        height: 100%;
+        box-shadow: var(--box-shadow);
+      }
+      .footer {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 1rem 0;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+      }
+      .icon-text {
+        display: flex;
+        align-items: center;
+      }
+      .icon-text i {
+        margin-right: 0.5rem;
+        color: var(--secondary-color);
+      }
+    </style>
   </head>
   <body>
+    <!-- 页面头部 -->
+    <header class="site-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1 class="site-title">台灣郵局存證信函產生器</h1>
+            <p class="site-description">免費快速產生格式合法、美觀的存證信函</p>
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <div class="container-fluid">
-	<div class="row p-3">
-		<div class="col-md-12 text-center">
-			<h3>
-				台灣郵局存證信函產生器
-			</h3>
-		</div>
-	</div>
-	<div class="row m-3 ">
-		
-		
-		<div class="col-md-4 ">
-			<h6 class="inline">
-				寄件人資訊
-			</h6> 
-			<div class="from_cards">
-			</div>
-			<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="寄件人">新增</button>
-		</div>
-		<div class="col-md-4 ">
-			<h6 class="inline">
-				收件人資訊
-			</h6> 
-			<div class="to_cards">
-			</div>
+    <div class="container">
+      <!-- 地址信息部分 -->
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="address-section">
+            <h5 class="section-title">
+              <i class="fas fa-paper-plane"></i> 寄件人資訊
+            </h5>
+            <div class="from_cards mb-3"></div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="寄件人">
+              <i class="fas fa-plus"></i> 新增寄件人
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="address-section">
+            <h5 class="section-title">
+              <i class="fas fa-user"></i> 收件人資訊
+            </h5>
+            <div class="to_cards mb-3"></div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="收件人">
+              <i class="fas fa-plus"></i> 新增收件人
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="address-section">
+            <h5 class="section-title">
+              <i class="fas fa-copy"></i> 副本收件人資訊
+            </h5>
+            <div class="copy_cards mb-3"></div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="副本地址">
+              <i class="fas fa-plus"></i> 新增副本收件人
+            </button>
+          </div>
+        </div>
+      </div>
 
-			<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="收件人">新增</button>
-		</div>
-		<div class="col-md-4 ">
-			<h6 class="inline">
-				副本收件人資訊
-			</h6> 
-			<div class="copy_cards">
-			</div>
-			
-			<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#adressModal" data-bs-whatever="副本地址">新增</button>
-		</div>
-	</div>
-	<div class="row  m-3">
+      <!-- 信函内容部分 -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="info-section">
+            <h5 class="section-title">
+              <i class="fas fa-envelope-open-text"></i> 信函內容
+            </h5>
+            <form role="form">
+              <div class="form-group mb-3">
+                <label for="letter_content" class="form-label">請輸入信函內容：</label>
+                <textarea class="form-control" id="letter_content" rows="8" placeholder="請在此輸入您的信函內容..."></textarea>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-warning" id="clear">
+                  <i class="fas fa-eraser"></i> 清除內文
+                </button>
+                <button type="button" class="btn btn-primary" id="generate" onclick="download()">
+                  <i class="fas fa-file-pdf"></i> 產生存證信函
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
-		<div class="col-md-12 ">
+      <!-- 说明信息部分 -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="info-section">
+            <h5 class="section-title">
+              <i class="fas fa-info-circle"></i> 使用說明
+            </h5>
+            <div class="info-content">
+              <div class="alert alert-info" role="alert">
+                <i class="fas fa-shield-alt"></i> 檔案不會儲存在伺服器，請放心使用。
+              </div>
+              
+              <h6 class="info-title">寫存證信函要點：</h6>
+              <ol class="list-group list-group-numbered mb-3">
+                <li class="list-group-item d-flex"><span class="ms-2">寫出完整事實</span></li>
+                <li class="list-group-item d-flex"><span class="ms-2">寫出自己訴求</span></li>
+                <li class="list-group-item d-flex"><span class="ms-2">切記不要寫對自己不利的內容</span></li>
+                <li class="list-group-item d-flex"><span class="ms-2">下最後通牒，以示警告</span></li>
+                <li class="list-group-item d-flex"><span class="ms-2">在這個網站產生後並不會自動幫您寄出，自行印出後，到郵局付郵資寄出才會有在郵局存證的效果</span></li>
+              </ol>
+              
+              <p class="mb-0">
+                <i class="fas fa-envelope"></i> 如果有任何問題，請寄信聯絡我：
+                <a href="mailto:kyjita@gmail.com" class="text-decoration-none">kyjita@gmail.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-			<button type="button" class="btn btn-warning" id="clear">
-				清除內文
-			</button>
-			<form role="form">
-				<div class="form-group">
-					 
-					<label for="letter_content">
-						內文
-					</label>
-					<textarea class="form-control" id="letter_content"></textarea>
-					
-				</div>				
-				<button type="button" class="btn btn-primary mt-2" id="generate" onclick="download()">
-					產生
-				</button>
-			</form>
-		</div>
-	</div>
+      <!-- 地址模态框 -->
+      <div class="modal fade" id="adressModal" tabindex="-1" aria-labelledby="adressModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="adressModalLabel">新增地址資訊</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="name" class="col-form-label">姓名或單位名稱:</label>
+                  <input type="text" class="form-control" id="name" placeholder="請輸入姓名或單位名稱">
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="col-form-label">地址:</label>
+                  <textarea class="form-control" id="address" placeholder="請輸入完整地址"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="submit_address">
+                <i class="fas fa-plus"></i> 新增
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-	<div class="row p-3">
-		<div class="modal fade" id="adressModal" tabindex="-1" aria-labelledby="adressModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="adressModalLabel">新增地址資訊</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form>
-				<div class="mb-3">
-					<label for="name" class="col-form-label">姓名或單位名稱:</label>
-					<input type="text" class="form-control" id="name">
-				</div>
-				<div class="mb-3">
-					<label for="address" class="col-form-label">地址:</label>
-					<textarea class="form-control" id="address"></textarea>
-				</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-				<button type="button" class="btn btn-primary"  data-bs-dismiss="modal"  id="submit_address">新增</button>
-			</div>
-			</div>
-		</div>
-		</div>
-		<div class="col-md-12 m-2">
-			<dl>
-				<dt>
-					說明:
-				</dt>
-				<dd>
-					檔案不會儲存在伺服器，請放心使用。
-				</dd>
-				<dt>
-					寫存證信函要點:
-				</dt>
-				<dd>
-					1. 寫出完整事實<br>
-					2. 寫出自己訴求<br>
-					3. 切記不要寫對自己不利的內容<br>
-					4. 下最後通牒，以示警告<br>
-					5. 在這個網站產生後並不會自動幫您寄出，自行印出後，到郵局付郵資寄出才會有在郵局存證的效果。<br>
-				</dd>
-				
-				<dd>
-					如果有任何問題，請寄信聯絡我 : kyjita@gmail.com
-				</dd>
-				
-			</dl>
-		</div>
-	</div>
-
-	
-</div>
+      <!-- 页脚 -->
+      <footer class="footer">
+        <div class="container">
+          <p class="m-0">© 2025 台灣郵局存證信函產生器 | 快速產生格式合法、美觀的存證信函</p>
+        </div>
+      </footer>
+    </div>
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/scripts.js"></script>
@@ -216,12 +376,14 @@
 			var cardHTML = `
 					<div class="card" id="${delete_key}">
 						<h5 class="card-header d-flex justify-content-between align-items-center">
-							<span class="title">${name}</span>
-							<button type="button" class="btn btn-danger" style="width: 70px;"  onclick="delete_card('${type}', ${count})" >刪除</button>
+							<span class="title"><i class="fas fa-user-circle me-2"></i>${name}</span>
+							<button type="button" class="btn btn-danger btn-sm" onclick="delete_card('${type}', ${count})" >
+								<i class="fas fa-trash-alt"></i> 刪除
+							</button>
 						</h5>
 						<div class="card-body">
 							<p class="card-text">
-								${address}
+								<i class="fas fa-map-marker-alt me-2 text-secondary"></i>${address}
 							</p>
 						</div>
 					</div>
