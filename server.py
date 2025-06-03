@@ -1,6 +1,8 @@
 import uvicorn, os, json, time, threading
+import tempfile
+import shutil
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse , FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import random
@@ -24,7 +26,7 @@ async def index(request: Request):
     })
 
 
-@app.post("/generate", response_class=FileResponse)
+@app.post("/generate")
 async def generate(request: Request):
     """
     產生檔案
@@ -68,23 +70,38 @@ async def generate(request: Request):
     if not text:
         return
 
-    output_filename = ""+generate_random_string(4) + "_output.pdf"
+    # 建立唯一暫存目錄
+    temp_dir = tempfile.mkdtemp()
+    output_filename = os.path.join(temp_dir, generate_random_string(4) + "_output.pdf")
 
+    # 產生 PDF
     core.generate_text_and_letter(senders, senders_addr,
                                   receivers, receivers_addr,
                                   ccs, cc_addr,
                                   text)
     core.merge_text_and_letter(output_filename)
     core.clean_temp_files()
-    response = FileResponse(output_filename, headers={"Content-Disposition": "attachment"})
     print('Done. Filename: ', output_filename)
-    try:
-        threading.Thread(target=delete_file_after_delay, args=(output_filename, 3)).start()
-    except Exception as e:
-        print(e)
-    return response
+    
+    def file_iterator(file_path):
+        with open(file_path, "rb") as f:
+            yield from f
+        # 傳送完畢後刪除檔案與資料夾
+        try:
+            os.remove(file_path)
+            shutil.rmtree(temp_dir, ignore_errors=True)
+            print(f"已刪除檔案與資料夾: {file_path}, {temp_dir}")
+        except Exception as e:
+            print(f"刪除檔案時發生錯誤: {str(e)}")
+
+    return StreamingResponse(
+        file_iterator(output_filename),
+        media_type="application/pdf",
+        headers={"Content-Disposition": "attachment; filename=letter.pdf"}
+    )
 
 
+# 這個函數已不再使用，但先保留在這裡
 def delete_file_after_delay(file_path, delay_seconds):
     try:
         # 等待指定秒數
