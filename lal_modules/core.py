@@ -55,7 +55,9 @@ def generate_text_and_letter(senders, senders_addr,
         _fill_name_address_on_1st_page(generator, ccs, cc_addr, 'c')
 
     generator.set_font(DEFAULT_FONT_PATH, 20)
-    _parse_main_article(generator, blank_letter_producer, main_text)
+    # 將寄件人、收件人等資訊傳給_parse_main_article函數
+    _parse_main_article(generator, blank_letter_producer, main_text,
+                       senders, senders_addr, receivers, receivers_addr, ccs, cc_addr)
 
     if one_page_is_enough is False:
         _draw_info_box(generator, senders, senders_addr, receivers, receivers_addr, ccs, cc_addr)
@@ -84,7 +86,7 @@ def _fill_name_address_on_1st_page(painter, namelist, addresslist, type_):
                             ADDR_COORDINATE[type_+'_x_y_begin'][1],
                             addresslist[0])
 
-def _parse_main_article(painter, page_pick, main_text):
+def _parse_main_article(painter, page_pick, main_text, senders=None, senders_addr=None, receivers=None, receivers_addr=None, ccs=None, cc_addr=None):
     print('Parse main article...')
     x_begin, y_begin, line_counter, char_counter = _reset_coordinates_and_counters()
     for i in range(0, len(main_text)):
@@ -98,11 +100,34 @@ def _parse_main_article(painter, page_pick, main_text):
             painter.end_this_page()
             page_pick.pick_individual_pages([0])
             x_begin, y_begin, line_counter, char_counter = _reset_coordinates_and_counters()
+            
+            # 在新頁面添加寄件人、收件人等資訊
+            if senders and senders_addr:
+                painter.set_font(DEFAULT_FONT_PATH, 10)
+                _fill_name_address_on_1st_page(painter, senders, senders_addr, 's')
+            if receivers and receivers_addr:
+                painter.set_font(DEFAULT_FONT_PATH, 10)
+                _fill_name_address_on_1st_page(painter, receivers, receivers_addr, 'r')
+            if ccs and cc_addr:
+                painter.set_font(DEFAULT_FONT_PATH, 10)
+                _fill_name_address_on_1st_page(painter, ccs, cc_addr, 'c')
+            painter.set_font(DEFAULT_FONT_PATH, 20)  # 還原字體大小
+            
         painter.draw_string(x_begin, y_begin, main_text[i])
         x_begin += (CONTENT_X_Y_INTERVAL[0] - CONTENT_X_Y_FIX[0])
         char_counter = char_counter + 1
     painter.end_this_page()
     page_pick.pick_individual_pages([0])
+    
+    # 最後一頁也添加寄件人、收件人等資訊
+    if senders and senders_addr and receivers and receivers_addr and ccs and cc_addr:
+        x_begin, y_begin, line_counter, char_counter = _reset_coordinates_and_counters()
+        painter.set_font(DEFAULT_FONT_PATH, 10)
+        _fill_name_address_on_1st_page(painter, senders, senders_addr, 's')
+        _fill_name_address_on_1st_page(painter, receivers, receivers_addr, 'r')
+        _fill_name_address_on_1st_page(painter, ccs, cc_addr, 'c')
+        painter.end_this_page()
+        page_pick.pick_individual_pages([0])
 
 def _get_new_line_coordinate(current_y):
     new_x = CONTENT_X_Y_BEGIN[0]
