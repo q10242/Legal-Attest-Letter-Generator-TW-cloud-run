@@ -38,5 +38,27 @@ Please read [Wiki](https://github.com/csterryliu/Legal-Attest-Letter-Generator-T
 - Compatible with Python 2.7
 - Keep matching PEP8
 
+## How To Run Locally ##
+### 環境需求
+- Python 3.7+
+- FastAPI
+- Uvicorn
+
+### 本地啟動步驟
+1. 安裝依賴套件
+```bash
+pip install -r requirements.txt
+```
+
+2. 啟動 Web 服務
+```bash
+uvicorn server:app --host 0.0.0.0 --port 8080 --reload
+```
+
+3. 開啟瀏覽器訪問 http://localhost:8080
+
+### Cloud Run 部署
+本專案已針對 Google Cloud Run 做最佳化設定，可直接部署至 Cloud Run 服務。
+
 ## License ##
 MIT

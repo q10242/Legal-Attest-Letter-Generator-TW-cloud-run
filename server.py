@@ -26,6 +26,66 @@ async def index(request: Request):
     })
 
 
+@app.get("/privacy-policy", response_class=HTMLResponse)
+async def privacy_policy(request: Request):
+    """
+    隱私權政策頁面
+    """
+    return templates.TemplateResponse("privacy-policy.html", {
+        "request": request,
+    })
+
+
+@app.get("/faq", response_class=HTMLResponse)
+async def faq(request: Request):
+    """
+    常見問題頁面
+    """
+    return templates.TemplateResponse("faq.html", {
+        "request": request,
+    })
+
+
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    """
+    關於我們頁面
+    """
+    return templates.TemplateResponse("about.html", {
+        "request": request,
+    })
+
+
+@app.get("/terms", response_class=HTMLResponse)
+async def terms(request: Request):
+    """
+    服務條款頁面
+    """
+    return templates.TemplateResponse("terms.html", {
+        "request": request,
+    })
+
+
+@app.get("/contact", response_class=HTMLResponse)
+async def contact(request: Request):
+    """
+    聯絡我們頁面
+    """
+    return templates.TemplateResponse("contact.html", {
+        "request": request,
+    })
+
+
+@app.get("/sitemap", response_class=HTMLResponse)
+async def sitemap(request: Request):
+    """
+    網站地圖頁面
+    """
+    return templates.TemplateResponse("sitemap.html", {
+        "request": request,
+    })
+
+
 @app.post("/generate")
 async def generate(request: Request):
     """
