@@ -1,4 +1,4 @@
-import uvicorn, os, json, time, threading
+import uvicorn, os, json, time, threading, socket
 import tempfile
 import shutil
 from fastapi import FastAPI, Request
@@ -84,6 +84,22 @@ async def sitemap(request: Request):
     return templates.TemplateResponse("sitemap.html", {
         "request": request,
     })
+
+
+@app.get("/_ops/db-tcp-test")
+async def db_tcp_test():
+    host = os.getenv("DB_HOST", "10.140.0.10")
+    port = int(os.getenv("DB_PORT", "3306"))
+    s = socket.socket()
+    s.settimeout(4)
+    try:
+        s.connect((host, port))
+        banner = s.recv(32)
+        return {"ok": True, "host": host, "port": port, "banner": banner.decode("latin1", errors="ignore")}
+    except Exception as e:
+        return {"ok": False, "host": host, "port": port, "error": str(e)}
+    finally:
+        s.close()
 
 
 @app.post("/generate")
