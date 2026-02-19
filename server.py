@@ -189,6 +189,7 @@ async def donate(request: Request):
     return_url = os.getenv("ECPAY_NOTIFY_URL", f"{base_url}/ecpay/notify")
     order_result_url = os.getenv("ECPAY_ORDER_RESULT_URL", f"{base_url}/donate/result")
 
+    choose_payment = os.getenv("ECPAY_CHOOSE_PAYMENT", "Credit")
     params = {
         "MerchantID": merchant_id,
         "MerchantTradeNo": trade_no,
@@ -199,7 +200,7 @@ async def donate(request: Request):
         "ItemName": f"網站贊助NT${amount} x 1",
         "ReturnURL": return_url,
         "OrderResultURL": order_result_url,
-        "ChoosePayment": "ALL",
+        "ChoosePayment": choose_payment,
         "EncryptType": "1",
     }
     params["CheckMacValue"] = ecpay_check_mac(params, hash_key, hash_iv)
@@ -214,7 +215,8 @@ async def donate(request: Request):
     except Exception as e:
         return HTMLResponse(f"建立訂單失敗: {e}", status_code=500)
 
-    action = "https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5"
+    ecpay_env = os.getenv("ECPAY_ENV", "production").lower()
+    action = "https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5" if ecpay_env == "production" else "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5"
     inputs = "\n".join([f'<input type="hidden" name="{k}" value="{v}">' for k, v in params.items()])
     html = f"""
     <html><body>
