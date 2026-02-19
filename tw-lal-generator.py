@@ -26,7 +26,7 @@ def main():
 
 def process_args():
     arg_parser = argparse.ArgumentParser(
-                            description=u'台灣郵局存證信函產生器 ' + core.VERSION,
+                            description=u'台灣郵局-存證信函產生器 ' + core.VERSION,
                             add_help=False)
     arg_parser.add_argument('--help',
                             action='help',

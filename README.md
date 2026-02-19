@@ -1,5 +1,5 @@
 # Legal Attest Letter Generator - Taiwan #
-台灣郵局存證信函產生器 (PDF 格式)。  
+台灣郵局-存證信函產生器 (PDF 格式)。  
 A tool for creating a legal attest letter of Taiwan - in PDF format.
 
 ![](./img/sample.png)
