@@ -189,7 +189,8 @@ async def donate(request: Request):
     return_url = os.getenv("ECPAY_NOTIFY_URL", f"{base_url}/ecpay/notify")
     order_result_url = os.getenv("ECPAY_ORDER_RESULT_URL", f"{base_url}/donate/result")
 
-    choose_payment = os.getenv("ECPAY_CHOOSE_PAYMENT", "Credit")
+    # 維持最通用預設：ALL（避免商店未開啟特定通道時直接報 10300023）
+    choose_payment = os.getenv("ECPAY_CHOOSE_PAYMENT", "ALL")
     params = {
         "MerchantID": merchant_id,
         "MerchantTradeNo": trade_no,
@@ -203,6 +204,11 @@ async def donate(request: Request):
         "ChoosePayment": choose_payment,
         "EncryptType": "1",
     }
+
+    ignore_payment = os.getenv("ECPAY_IGNORE_PAYMENT", "").strip()
+    if ignore_payment:
+        params["IgnorePayment"] = ignore_payment
+
     params["CheckMacValue"] = ecpay_check_mac(params, hash_key, hash_iv)
 
     try:
